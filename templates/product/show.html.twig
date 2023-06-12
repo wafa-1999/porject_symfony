@@ -1,0 +1,14 @@
+{# {{ product.id }}
+{{ product.productName }}
+{{ product.category }}
+{{ product.price }}
+{{ product.imageUrl }} #}
+
+<h1>{{ product.productName }}</h1>
+
+<h2>Reviews:</h2>
+<ul>
+    {% for review in reviews %}
+        <li>{{ review.value }} - {{ review.content }}</li>
+    {% endfor %}
+</ul>

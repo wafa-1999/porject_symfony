@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product Dashboard</title>
+  <link href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
+  <style>
+    /* Custom styles */
+    .navbar-custom {
+      background-color: #FF7F50; /* Change to the desired background color */
+    }
+
+    .table-header {
+      background-color: #FF7F50; /* Change to the desired background color */
+    }
+
+    .sidebar {
+      background-color: #343a40; /* Change to the desired background color */
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      padding: 20px;
+      color: #f8f9fa; /* Change to the desired text color */
+    }
+
+    .sidebar .nav-link {
+      color: #f8f9fa; /* Change to the desired link color */
+    }
+
+    .sidebar .nav-link:hover {
+      color: #ffffff; /* Change to the desired hover link color */
+    }
+
+    .sidebar .active {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
+          <a class="navbar-brand" href="#">Product Dashboard</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-2">
+        <div class="sidebar">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Categories</a>
+            </li>
+            <!-- Add more sidebar items as needed -->
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-10">
+        <table class="table table-striped">
+          <thead>
+            <tr class="table-header">
+              <th>ID</th>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Image</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for listp in ListProd %}
+            <tr>
+              <td>{{ listp.id }}</td>
+              <td>{{ listp.productName }}</td>
+              <td>{{ listp.category }}</td>
+              <td>{{ listp.price }}</td>
+              <td>
+                <img src="{{ listp.imageUrl }}" alt="{{ listp.productName }}" width="100">
+              </td>
+              <td>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path('show_product', {'id': listp.id}) }}'">
+                    Voir détail
+                </button>
+              </td>
+            </tr>
+            <!-- Modal -->
+            <div class="modal fade" id="productModal{{ listp.id }}" tabindex="-1" role="dialog" aria-labelledby="productModalLabel{{ listp.id }}" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="productModalLabel{{ listp.id }}">{{ listp.productName }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Category: {{ listp.category }}</p>
+                    <p>Price: {{ listp.price }}</p>
+                    <!-- Add more product details here -->
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.js') }}"></script>
+</body>
+</html>
